@@ -44,18 +44,28 @@ function App() {
     if (!userInput || isNaN(userNum)) {
       setResultMessage('숫자를 입력해주세요.')
       setFontColor(ERROR_FONT_COLOR)
+      setUserInput('')
+      return
+    }
+
+    if (!Number.isInteger(userNum)) {
+      setResultMessage('정수를 입력해주세요.')
+      setFontColor(ERROR_FONT_COLOR)
+      setUserInput('')
       return
     }
 
     if (userNum < 1 || userNum > 100) {
       setResultMessage('1부터 100까지의 숫자만 입력해주세요.')
       setFontColor(ERROR_FONT_COLOR)
+      setUserInput('')
       return
     }
 
     if (history.includes(userNum)) {
       setResultMessage('입력한 숫자입니다. 다른 숫자를 입력해주세요.')
       setFontColor(ERROR_FONT_COLOR)
+      setUserInput('')
       return
     }
 
@@ -101,7 +111,12 @@ function App() {
           id='result-area'
           style={{ color: fontColor }}
         >{resultMessage}</p>
-        <p id='chance-area'>남은 기회: {chances}번</p>
+        <p
+          id='chance-area'
+          style={{
+            color: chances <= 3 ? ERROR_FONT_COLOR : INITIAL_FONT_COLOR,
+          }} // 남은 기회가 3 이하일 때 폰트 컬러 변경
+        >남은 기회: {chances}번</p>
       </div>
       <input
         type='number'
